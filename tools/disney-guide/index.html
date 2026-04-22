@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>東京迪士尼海洋 2026 互動攻略</title>
+<style>
+  :root {
+    --navy: #0d1b2e;
+    --navy2: #162640;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --jubilee: #1a6fa8;
+    --jubilee-light: #2a8fd8;
+    --white: #f5f0e8;
+    --red: #e04040;
+    --green: #2ecc71;
+    --text: #d8cdb8;
+    --card: #1a2d45;
+    --card2: #1e3450;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', 'Noto Serif TC', serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(160deg, #0a1520 0%, #0d2040 50%, #0f1e35 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 28px 24px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(26,111,168,0.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--jubilee);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-size: clamp(22px, 5vw, 36px);
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  header p {
+    color: var(--text);
+    font-size: 13px;
+    font-style: italic;
+  }
+  .stars {
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 4px;
+    margin-top: 6px;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    background: var(--navy2);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: none;
+    padding: 12px 18px;
+    font-size: 13px;
+    color: var(--text);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  /* ── CONTENT ── */
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.35s ease;
+    padding: 24px 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+
+  /* ── HIGHLIGHT CARDS (Tab 1) ── */
+  .highlight-card {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 4px solid var(--jubilee);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .highlight-card .sub { color: var(--jubilee-light); font-size: 12px; margin-bottom: 10px; }
+  .highlight-card ul { list-style: none; padding: 0; }
+  .highlight-card ul li {
+    color: var(--text);
+    font-size: 14px;
+    padding: 4px 0 4px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .highlight-card ul li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+  .date-badge {
+    display: inline-block;
+    background: rgba(26,111,168,0.25);
+    border: 1px solid var(--jubilee);
+    color: var(--jubilee-light);
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+
+  /* ── DPA CARDS (Tab 2) ── */
+  .dpa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .dpa-card {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .dpa-card .dpa-name { font-size: 14px; color: var(--gold); margin-bottom: 4px; font-weight: bold; }
+  .dpa-card .dpa-fee {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .fee-paid { background: rgba(224,64,64,0.2); border: 1px solid #e04040; color: #ff7070; }
+  .fee-free { background: rgba(46,204,113,0.2); border: 1px solid #2ecc71; color: #5eff9e; }
+  .dpa-card .dpa-use { color: var(--text); font-size: 12px; margin-bottom: 8px; }
+  .dpa-card .dpa-rule { color: #a0b8cc; font-size: 11px; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 8px; }
+
+  /* Checklist */
+  .checklist { background: var(--card); border: 1px solid rgba(201,168,76,0.2); border-radius: 4px; padding: 20px; }
+  .checklist h4 { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+  .checklist label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .checklist label:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; accent-color: var(--gold); cursor: pointer; }
+  .checklist label.checked { color: var(--gold-light); text-decoration: line-through; opacity: 0.6; }
+
+  /* ── TIMELINE (Tab 3) ── */
+  .mode-toggle {
+    display: flex;
+    background: var(--card2);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    padding: 4px;
+    width: fit-content;
+    margin-bottom: 20px;
+    gap: 4px;
+  }
+  .mode-btn {
+    padding: 7px 20px;
+    font-size: 13px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: var(--text);
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .mode-btn.active { background: var(--jubilee); color: #fff; }
+
+  .timeline { position: relative; padding-left: 4px; }
+  .tl-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    animation: fadeIn 0.3s ease;
+  }
+  .tl-time {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gold);
+    min-width: 56px;
+    font-family: 'Courier New', monospace;
+  }
+  .tl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+    border: 2px solid;
+  }
+  .dot-red { background: rgba(224,64,64,0.3); border-color: #e04040; }
+  .dot-amber { background: rgba(255,165,0,0.3); border-color: orange; }
+  .dot-blue { background: rgba(26,111,168,0.3); border-color: var(--jubilee); }
+  .tl-info { flex: 1; }
+  .tl-name { font-size: 15px; color: var(--white); margin-bottom: 3px; }
+  .tl-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .tag-urgent { background: rgba(224,64,64,0.2); border: 1px solid #e04040; color: #ff7070; }
+  .tag-warn { background: rgba(255,165,0,0.2); border: 1px solid orange; color: #ffc04d; }
+  .tag-ok { background: rgba(46,204,113,0.15); border: 1px solid #2ecc71; color: #5eff9e; }
+
+  .warning-box {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+  .warning-box strong { color: var(--gold); }
+
+  /* ── POPCORN (Tab 4) ── */
+  .popcorn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .popcorn-card {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 16px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .popcorn-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-2px); }
+  .popcorn-card.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+  }
+  .popcorn-icon { font-size: 32px; margin-bottom: 8px; }
+  .popcorn-name { font-size: 13px; color: var(--white); margin-bottom: 4px; line-height: 1.3; }
+  .popcorn-price { font-size: 13px; color: var(--gold); font-family: 'Courier New', monospace; margin-bottom: 8px; }
+  .popcorn-badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .badge-limited { background: rgba(26,111,168,0.3); border: 1px solid var(--jubilee); color: var(--jubilee-light); }
+  .badge-classic { background: rgba(201,168,76,0.2); border: 1px solid var(--gold); color: var(--gold); }
+  .badge-sea { background: rgba(46,204,113,0.15); border: 1px solid #2ecc71; color: #5eff9e; }
+  .check-mark {
+    font-size: 18px;
+    margin-top: 6px;
+    height: 20px;
+    color: var(--gold);
+  }
+  .cart-bar {
+    background: var(--card2);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .cart-count { color: var(--gold); font-size: 15px; }
+  .cart-btn {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+  }
+  .tip-box {
+    background: rgba(26,111,168,0.1);
+    border: 1px solid rgba(26,111,168,0.4);
+    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .tip-box strong { color: var(--jubilee-light); }
+
+  /* ── ACCORDION (Tab 5) ── */
+  .accordion-item {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .accordion-header:hover { background: rgba(201,168,76,0.05); }
+  .accordion-header h3 { font-size: 15px; color: var(--gold-light); }
+  .accordion-arrow {
+    color: var(--gold);
+    font-size: 18px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    border-top: 0;
+  }
+  .accordion-item.open .accordion-body { max-height: 400px; border-top: 1px solid rgba(201,168,76,0.1); }
+  .accordion-body ul {
+    list-style: none;
+    padding: 16px 20px;
+  }
+  .accordion-body ul li {
+    color: var(--text);
+    font-size: 13px;
+    padding: 5px 0 5px 16px;
+    position: relative;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .accordion-body ul li:last-child { border-bottom: none; }
+  .accordion-body ul li::before { content: '◆'; position: absolute; left: 0; color: var(--jubilee); font-size: 8px; top: 8px; }
+  .accent { color: var(--gold-light); font-weight: bold; }
+  .accent-blue { color: var(--jubilee-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">2026 Official Strategy Guide</div>
+  <h1>🏯 東京迪士尼海洋<br>互動攻略手冊</h1>
+  <div class="stars">✦ ✦ ✦</div>
+  <p>Tokyo DisneySea · 25th Anniversary · Sparkling Jubilee</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('tab1', this)">🏰 今年亮點</button>
+  <button class="tab-btn" onclick="switchTab('tab2', this)">⚡ 快速通關</button>
+  <button class="tab-btn" onclick="switchTab('tab3', this)">⏰ 售罄警報</button>
+  <button class="tab-btn" onclick="switchTab('tab4', this)">🍿 爆米花桶</button>
+  <button class="tab-btn" onclick="switchTab('tab5', this)">🧭 老手策略</button>
+</div>
+
+<!-- ═══ TAB 1: 今年亮點 ═══ -->
+<div id="tab1" class="tab-content active">
+  <div class="section-title">2026 年度重磅活動</div>
+
+  <div class="highlight-card">
+    <div class="date-badge">📅 2026/4/15 – 2027/3/31</div>
+    <h3>✨ 25 週年「閃耀慶典」Sparkling Jubilee</h3>
+    <p class="sub">代表色：慶典藍 Jubilee Blue</p>
+    <ul>
+      <li><strong>Sparkling Jubilee Celebration</strong>：地中海港灣巡航，米奇與好友著週年慶典裝巡遊</li>
+      <li><strong>Dance the Globe!</strong>：美國海濱，結合世界各地舞蹈與音樂</li>
+      <li>夜間「閃耀慶典之夜」影像投影 — 地中海港灣</li>
+      <li>AquaSphere 水球 + 各主題港口均有慶典藍裝飾</li>
+      <li>限定紀念瓶：Ponte Vecchio 橋購買，放入「慶典藍寶石」</li>
+    </ul>
+  </div>
+
+  <div class="highlight-card" style="border-left-color: #e8a030;">
+    <div class="date-badge">📅 2026/7/2 – 9/14</div>
+    <h3>🤠 Funtime with Toy Story 5</h3>
+    <p class="sub">配合 2026/6/18 全球電影上映</p>
+    <ul>
+      <li>集章活動、限定主題商品、主題菜單</li>
+      <li>「玩具總動員瘋狂遊戲屋」為 DPA 重點項目</li>
+      <li>角色見面會、特殊小吃等期間限定體驗</li>
+    </ul>
+  </div>
+
+  <div class="highlight-card" style="border-left-color: #9c59b6;">
+    <h3>🌊 夢幻泉鄉 Fantasy Springs（常駐熱區）</h3>
+    <p class="sub">2024 年開幕，目前仍是全園最熱門區域</p>
+    <ul>
+      <li>《冰雪奇緣》— 安娜與艾莎的冰雪之旅（最難搶！）</li>
+      <li>《魔髮奇緣》— 魔髮奇緣燈塔</li>
+      <li>《彼得潘》— 彼得潘的夢幻飛行</li>
+      <li>餐飲：艾倫戴爾皇家宴會（約 ¥3,500）/ 醜小鴨小館</li>
+      <li>⚠️ 進入通常需要 DPA 或預約等候卡</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ TAB 2: 快速通關 ═══ -->
+<div id="tab2" class="tab-content">
+  <div class="section-title">四種數位快速通關方式</div>
+  <div class="dpa-grid">
+    <div class="dpa-card">
+      <div class="dpa-name">迪士尼尊享卡 DPA</div>
+      <span class="dpa-fee fee-paid">付費 ¥1,500–2,500/次</span>
+      <div class="dpa-use">熱門設施 / 表演</div>
+      <div class="dpa-rule">每次限購一人一項，間隔 60 分鐘或時段開始後可再買下一張。</div>
+    </div>
+    <div class="dpa-card">
+      <div class="dpa-name">優先入場卡（免費）</div>
+      <span class="dpa-fee fee-free">免費</span>
+      <div class="dpa-use">指定熱門遊樂設施</div>
+      <div class="dpa-rule">系統自動分配時段，間隔 120 分鐘或時段開始後可再領取。</div>
+    </div>
+    <div class="dpa-card">
+      <div class="dpa-name">預約等候卡 Standby Pass</div>
+      <span class="dpa-fee fee-free">免費</span>
+      <div class="dpa-use">熱門商店 / 扭蛋機 / 限定餐廳</div>
+      <div class="dpa-rule">持卡才能排隊，<strong>非免排隊</strong>，只是獲得排隊資格。</div>
+    </div>
+    <div class="dpa-card">
+      <div class="dpa-name">報名體驗 Entry Request</div>
+      <span class="dpa-fee fee-free">免費（抽選）</span>
+      <div class="dpa-use">娛樂表演 / 明星迎賓會</div>
+      <div class="dpa-rule">抽選制，每人每天每項目限一次，不保證中選。</div>
+    </div>
+  </div>
+
+  <div class="section-title">行前必備清單</div>
+  <div class="checklist">
+    <h4>✅ 入園前全部打勾才算準備完成</h4>
+    <label id="chk1"><input type="checkbox" onchange="toggleCheck(this)" /> 下載東京迪士尼官方 App（Tokyo Disney Resort App）</label>
+    <label id="chk2"><input type="checkbox" onchange="toggleCheck(this)" /> 註冊 MyDisney Account 並登入 App</label>
+    <label id="chk3"><input type="checkbox" onchange="toggleCheck(this)" /> 提前掃描並載入 <strong>所有同伴</strong> 的門票 QR Code</label>
+    <label id="chk4"><input type="checkbox" onchange="toggleCheck(this)" /> App 內綁定信用卡（搶 DPA 時要刷！）</label>
+    <label id="chk5"><input type="checkbox" onchange="toggleCheck(this)" /> 準備獨立 eSIM 或高速數據方案（避免園區 Wi-Fi 卡頓）</label>
+  </div>
+</div>
+
+<!-- ═══ TAB 3: 售罄警報 ═══ -->
+<div id="tab3" class="tab-content">
+  <div class="section-title">DPA 平均售罄時間（2026 數據）</div>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="btn-weekday" onclick="setMode('weekday')">📅 平日</button>
+    <button class="mode-btn" id="btn-weekend" onclick="setMode('weekend')">🗓️ 週末 / 假日</button>
+  </div>
+
+  <div class="timeline" id="timeline-weekday">
+    <div class="tl-item">
+      <span class="tl-time">08:52</span>
+      <div class="tl-dot dot-red"></div>
+      <div class="tl-info">
+        <div class="tl-name">❄️ 安娜與艾莎的冰雪之旅</div>
+        <span class="tl-tag tag-urgent">🔴 極速售罄！入園即搶</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">09:42</span>
+      <div class="tl-dot dot-amber"></div>
+      <div class="tl-info">
+        <div class="tl-name">🌍 翱翔：夢幻奇航</div>
+        <span class="tl-tag tag-warn">⚠️ 次優先，搶完冰雪立刻衝</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">12:05</span>
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-info">
+        <div class="tl-name">🌹 美女與野獸城堡奇緣</div>
+        <span class="tl-tag tag-ok">中午前完成即可</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">16:42</span>
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-info">
+        <div class="tl-name">🍜 杯麵歡樂之旅</div>
+        <span class="tl-tag tag-ok">下午仍有機會，較輕鬆</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline" id="timeline-weekend" style="display:none;">
+    <div class="tl-item">
+      <span class="tl-time">09:11</span>
+      <div class="tl-dot dot-red"></div>
+      <div class="tl-info">
+        <div class="tl-name">❄️ 安娜與艾莎的冰雪之旅</div>
+        <span class="tl-tag tag-urgent">🔴 極速售罄！入園即搶</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">10:04</span>
+      <div class="tl-dot dot-amber"></div>
+      <div class="tl-info">
+        <div class="tl-name">🌍 翱翔：夢幻奇航</div>
+        <span class="tl-tag tag-warn">⚠️ 次優先，時間更緊迫</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">13:08</span>
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-info">
+        <div class="tl-name">🌹 美女與野獸城堡奇緣</div>
+        <span class="tl-tag tag-ok">中午前完成仍可</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <span class="tl-time">14:06</span>
+      <div class="tl-dot dot-amber"></div>
+      <div class="tl-info">
+        <div class="tl-name">🍜 杯麵歡樂之旅</div>
+        <span class="tl-tag tag-warn">⚠️ 較平日提早 2.5 小時，別大意！</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <strong>🔥 黃金 20 分鐘法則</strong><br>
+    開園後的前 20 分鐘是決勝關鍵。App 加載緩慢可能毀掉全天行程！入園前請確認網路穩定，切勿依賴園區公共 Wi-Fi。
+  </div>
+</div>
+
+<!-- ═══ TAB 4: 爆米花桶 ═══ -->
+<div id="tab4" class="tab-content">
+  <div class="section-title">2026 限定爆米花桶收藏清單</div>
+
+  <div class="cart-bar">
+    <span class="cart-count">🛒 已收藏：<span id="cart-num">0</span> 個</span>
+    <button class="cart-btn" onclick="clearCart()">清空清單</button>
+  </div>
+
+  <div class="popcorn-grid">
+    <div class="popcorn-card" id="pc0" onclick="togglePopcorn(0)">
+      <div class="popcorn-icon">🤠</div>
+      <div class="popcorn-name">玩具總動員桶</div>
+      <div class="popcorn-price">¥3,600–3,800</div>
+      <span class="popcorn-badge badge-classic">多處販售</span>
+      <div class="check-mark" id="cm0"></div>
+    </div>
+    <div class="popcorn-card" id="pc1" onclick="togglePopcorn(1)">
+      <div class="popcorn-icon">💎</div>
+      <div class="popcorn-name">25週年慶典限定桶</div>
+      <div class="popcorn-price">限定</div>
+      <span class="popcorn-badge badge-limited">慶典藍 · 2026/4起</span>
+      <div class="check-mark" id="cm1"></div>
+    </div>
+    <div class="popcorn-card" id="pc2" onclick="togglePopcorn(2)">
+      <div class="popcorn-icon">🏰</div>
+      <div class="popcorn-name">城堡發光桶</div>
+      <div class="popcorn-price">¥3,400</div>
+      <span class="popcorn-badge badge-classic">經典不敗</span>
+      <div class="check-mark" id="cm2"></div>
+    </div>
+    <div class="popcorn-card" id="pc3" onclick="togglePopcorn(3)">
+      <div class="popcorn-icon">🦊</div>
+      <div class="popcorn-name">麗娜貝爾 LinaBell</div>
+      <div class="popcorn-price">¥2,600</div>
+      <span class="popcorn-badge badge-sea">海洋限定</span>
+      <div class="check-mark" id="cm3"></div>
+    </div>
+    <div class="popcorn-card" id="pc4" onclick="togglePopcorn(4)">
+      <div class="popcorn-icon">🐱</div>
+      <div class="popcorn-name">傑拉多尼 Gelatoni</div>
+      <div class="popcorn-price">¥2,600</div>
+      <span class="popcorn-badge badge-sea">海洋限定</span>
+      <div class="check-mark" id="cm4"></div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>店員密語</strong>：購買時說「<strong>Popcorn separately</strong>」，可以拿到乾淨的桶子 + 爆米花分開裝在紙盒裡，方便收藏與清洗！
+  </div>
+</div>
+
+<!-- ═══ TAB 5: 老手策略 ═══ -->
+<div id="tab5" class="tab-content">
+  <div class="section-title">進階遊玩策略</div>
+
+  <div class="accordion-item open" id="acc0">
+    <div class="accordion-header" onclick="toggleAccordion(0)">
+      <h3>🌤️ 最佳入園時機</h3>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><span class="accent">推薦月份</span>：<span class="accent-blue">5月、9月初、11月</span> — 氣候舒適 + 季節性活動（復活節、萬聖節/聖誕節切換期）</li>
+        <li><span class="accent">嚴格避開</span>：7–8月（東京最高可達 38°C，嚴重消耗排隊體力）</li>
+        <li><span class="accent">Happy Entry 特權</span>：入住迪士尼官方飯店可提前 15 分鐘入園 — 足以領先數萬人搶到冰雪奇緣 DPA！</li>
+        <li>官方飯店房客可享 Happy Entry + 交通便利，整體 CP 值高</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item" id="acc1">
+    <div class="accordion-header" onclick="toggleAccordion(1)">
+      <h3>⚡ 多人同行分工術</h3>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><span class="accent">A 組任務</span>：衝 DPA — 專門負責搶「安娜與艾莎冰雪之旅」等付費快速通關</li>
+        <li><span class="accent">B 組任務</span>：同步抽免費「優先入場卡」或「報名體驗」抽選</li>
+        <li>開園前確認每個人的 App 都已載好門票，不要臨時才找票</li>
+        <li>進園後立即分頭行動，<span class="accent-blue">黃金 20 分鐘</span>不能浪費在找人</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item" id="acc2">
+    <div class="accordion-header" onclick="toggleAccordion(2)">
+      <h3>💰 省錢攻略</h3>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><span class="accent">Single Rider 單人通道</span>：印第安納瓊斯冒險旅程、忿怒雙神等設施 — 等待從 2 小時縮短至 <span class="accent-blue">15 分鐘以內</span>，完全免費</li>
+        <li>不介意與同伴分開乘坐即可使用 Single Rider</li>
+        <li>爆米花說「<span class="accent">Popcorn separately</span>」— 桶子乾淨好收藏，不用重買</li>
+        <li>部分設施的免費優先入場卡與DPA共用額度，需評估哪項更划算</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item" id="acc3">
+    <div class="accordion-header" onclick="toggleAccordion(3)">
+      <h3>🎖️ 25 週年限定體驗</h3>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><span class="accent">Jubilee Blue Memories</span>：地中海港灣 Ponte Vecchio 橋 — 購買專屬紀念瓶並放入「慶典藍寶石」，25週年期間限定，極高收藏價值</li>
+        <li>慶典藍裝飾：AquaSphere 水球 + 各主題港口 — 適合拍照的打卡點</li>
+        <li>夜間投影「閃耀慶典之夜」建議提早 30 分鐘卡位地中海港灣岸邊</li>
+        <li>25週年限定商品預計快速完售，建議<span class="accent-blue">開園第一天早上購買</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  資料來源：雲端硬碟「日本迪士尼」資料夾 · 東京迪士尼海洋 2026 深度研究報告<br>
+  本攻略數據基於 2026 年平均觀測，實際情況以官方公告為準
+</footer>
+
+<script>
+  // Tab switching
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Checklist
+  function toggleCheck(input) {
+    const label = input.parentElement;
+    label.classList.toggle('checked', input.checked);
+  }
+
+  // Timeline mode
+  function setMode(mode) {
+    document.getElementById('timeline-weekday').style.display = mode === 'weekday' ? 'block' : 'none';
+    document.getElementById('timeline-weekend').style.display = mode === 'weekend' ? 'block' : 'none';
+    document.getElementById('btn-weekday').classList.toggle('active', mode === 'weekday');
+    document.getElementById('btn-weekend').classList.toggle('active', mode === 'weekend');
+  }
+
+  // Popcorn cart
+  const selected = new Set();
+  function togglePopcorn(i) {
+    const card = document.getElementById('pc' + i);
+    const cm = document.getElementById('cm' + i);
+    if (selected.has(i)) {
+      selected.delete(i);
+      card.classList.remove('selected');
+      cm.textContent = '';
+    } else {
+      selected.add(i);
+      card.classList.add('selected');
+      cm.textContent = '✓';
+    }
+    document.getElementById('cart-num').textContent = selected.size;
+  }
+  function clearCart() {
+    selected.forEach(i => {
+      document.getElementById('pc' + i).classList.remove('selected');
+      document.getElementById('cm' + i).textContent = '';
+    });
+    selected.clear();
+    document.getElementById('cart-num').textContent = 0;
+  }
+
+  // Accordion
+  function toggleAccordion(i) {
+    const item = document.getElementById('acc' + i);
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
