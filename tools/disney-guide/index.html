@@ -4,20 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>東京迪士尼海洋 2026 互動攻略</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root {
-    --navy: #0d1b2e;
-    --navy2: #162640;
+    --navy: #06152b;
+    --navy2: #0a1f3d;
     --gold: #c9a84c;
     --gold-light: #e8c96a;
-    --jubilee: #1a6fa8;
-    --jubilee-light: #2a8fd8;
-    --white: #f5f0e8;
+    --jubilee: #2980b9;
+    --jubilee-light: #5dade2;
+    --white: #e8f4fc;
     --red: #e04040;
     --green: #2ecc71;
-    --text: #d8cdb8;
-    --card: #1a2d45;
-    --card2: #1e3450;
+    --text: #b8d4e8;
+    --card: #0d2340;
+    --card2: #102a4a;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -857,91 +859,19 @@
   <p style="font-size:12px;color:var(--text);margin-bottom:14px;">點擊地圖上的區域，查看設施、餐廳、票種與注意事項。</p>
 
   <div class="map-layout">
-    <!-- SVG Map -->
+    <!-- Leaflet Real Map -->
     <div class="map-wrap">
-      <svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg">
-        <!-- 海洋背景 -->
-        <rect width="500" height="440" fill="#0a1a2e"/>
-        <ellipse cx="250" cy="200" rx="195" ry="165" fill="#0d3358" opacity="0.6"/>
-
-        <!-- 地中海港灣 Mediterranean Harbor (入口, 底部中央) -->
-        <g class="zone-area" id="z0" onclick="showZone(0)">
-          <ellipse cx="250" cy="370" rx="110" ry="52" fill="#2a7a9a"/>
-          <text class="zone-label" x="250" y="363">地中海港灣</text>
-          <text class="zone-label-sub" x="250" y="378">Mediterranean Harbor</text>
-        </g>
-
-        <!-- 美國海濱 American Waterfront (右下) -->
-        <g class="zone-area" id="z1" onclick="showZone(1)">
-          <ellipse cx="388" cy="310" rx="82" ry="55" fill="#8b3a2a"/>
-          <text class="zone-label" x="388" y="303">美國海濱</text>
-          <text class="zone-label-sub" x="388" y="318">American Waterfront</text>
-        </g>
-
-        <!-- 發現港 Port Discovery (右上) -->
-        <g class="zone-area" id="z2" onclick="showZone(2)">
-          <ellipse cx="390" cy="185" rx="78" ry="52" fill="#1a6a8a"/>
-          <text class="zone-label" x="390" y="178">發現港</text>
-          <text class="zone-label-sub" x="390" y="193">Port Discovery</text>
-        </g>
-
-        <!-- 失落河三角洲 Lost River Delta (上方) -->
-        <g class="zone-area" id="z3" onclick="showZone(3)">
-          <ellipse cx="270" cy="95" rx="90" ry="52" fill="#2d6a2a"/>
-          <text class="zone-label" x="270" y="88">失落河三角洲</text>
-          <text class="zone-label-sub" x="270" y="103">Lost River Delta</text>
-        </g>
-
-        <!-- 阿拉伯海岸 Arabian Coast (左上) -->
-        <g class="zone-area" id="z4" onclick="showZone(4)">
-          <ellipse cx="118" cy="148" rx="82" ry="52" fill="#8a6a1a"/>
-          <text class="zone-label" x="118" y="141">阿拉伯海岸</text>
-          <text class="zone-label-sub" x="118" y="156">Arabian Coast</text>
-        </g>
-
-        <!-- 美人魚礁湖 Mermaid Lagoon (左下) -->
-        <g class="zone-area" id="z5" onclick="showZone(5)">
-          <ellipse cx="112" cy="278" rx="80" ry="52" fill="#4a2a7a"/>
-          <text class="zone-label" x="112" y="271">美人魚礁湖</text>
-          <text class="zone-label-sub" x="112" y="286">Mermaid Lagoon</text>
-        </g>
-
-        <!-- 神秘島 Mysterious Island (中央) -->
-        <g class="zone-area" id="z6" onclick="showZone(6)">
-          <ellipse cx="248" cy="218" rx="68" ry="52" fill="#5a1a0a"/>
-          <text class="zone-label" x="248" y="211">神秘島</text>
-          <text class="zone-label-sub" x="248" y="226">Mysterious Island</text>
-        </g>
-
-        <!-- 夢幻泉鄉 Fantasy Springs (右側延伸) -->
-        <g class="zone-area" id="z7" onclick="showZone(7)">
-          <rect x="455" y="100" width="42" height="200" rx="6" fill="#1a3a6a"/>
-          <text class="zone-label" x="476" y="180" transform="rotate(90,476,180)">夢幻泉鄉 Fantasy Springs</text>
-        </g>
-
-        <!-- 入口標示 -->
-        <polygon points="250,420 243,410 257,410" fill="var(--gold)" opacity="0.9"/>
-        <text x="250" y="408" text-anchor="middle" font-size="9" fill="#c9a84c">入口</text>
-
-        <!-- 火山 icon on Mysterious Island -->
-        <text x="248" y="205" text-anchor="middle" font-size="18" style="pointer-events:none">🌋</text>
-
-        <!-- 新區標示 -->
-        <rect x="456" y="88" width="40" height="14" rx="2" fill="#c9a84c"/>
-        <text x="476" y="98" text-anchor="middle" font-size="8" fill="#0d1b2e" font-weight="bold">2024新</text>
-      </svg>
-
-      <!-- Legend -->
+      <div id="tds-map" style="height:460px;width:100%;border-radius:4px;"></div>
       <div style="padding:10px 14px 12px;">
         <div class="map-legend">
           <div class="legend-item"><div class="legend-dot" style="background:#2a7a9a"></div>地中海港灣</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#8b3a2a"></div>美國海濱</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>美國海濱</div>
           <div class="legend-item"><div class="legend-dot" style="background:#1a6a8a"></div>發現港</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2d6a2a"></div>失落河三角洲</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#8a6a1a"></div>阿拉伯海岸</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#4a2a7a"></div>美人魚礁湖</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#5a1a0a"></div>神秘島</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#1a3a6a"></div>夢幻泉鄉</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div>失落河三角洲</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#d4a017"></div>阿拉伯海岸</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8e44ad"></div>美人魚礁湖</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#922b21"></div>神秘島</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1a4a8a"></div>夢幻泉鄉✨</div>
         </div>
       </div>
     </div>
@@ -968,6 +898,7 @@
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
+    if (id === 'tab6') setTimeout(initLeafletMap, 50);
   }
 
   // Checklist
@@ -1013,6 +944,72 @@
   function toggleAccordion(i) {
     const item = document.getElementById('acc' + i);
     item.classList.toggle('open');
+  }
+
+  // ── LEAFLET MAP ──
+  let mapInit = false;
+  function initLeafletMap() {
+    if (mapInit) return;
+    mapInit = true;
+
+    const map = L.map('tds-map', { zoomControl: true }).setView([35.6268, 139.8838], 17);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    const zoneConfig = [
+      { name:'地中海港灣', en:'Mediterranean Harbor', latlng:[35.6253,139.8830], color:'#2a7a9a', radius:90,  idx:0 },
+      { name:'美國海濱',   en:'American Waterfront',  latlng:[35.6262,139.8855], color:'#c0392b', radius:85,  idx:1 },
+      { name:'發現港',     en:'Port Discovery',        latlng:[35.6282,139.8860], color:'#1a6a8a', radius:75,  idx:2 },
+      { name:'失落河三角洲',en:'Lost River Delta',     latlng:[35.6293,139.8840], color:'#27ae60', radius:80,  idx:3 },
+      { name:'阿拉伯海岸', en:'Arabian Coast',         latlng:[35.6285,139.8818], color:'#d4a017', radius:78,  idx:4 },
+      { name:'美人魚礁湖', en:'Mermaid Lagoon',        latlng:[35.6270,139.8818], color:'#8e44ad', radius:72,  idx:5 },
+      { name:'神秘島',     en:'Mysterious Island',     latlng:[35.6277,139.8838], color:'#922b21', radius:68,  idx:6 },
+      { name:'夢幻泉鄉 ✨',en:'Fantasy Springs',       latlng:[35.6272,139.8870], color:'#1a4a8a', radius:82,  idx:7 },
+    ];
+
+    zoneConfig.forEach(z => {
+      const circle = L.circle(z.latlng, {
+        color: z.color,
+        fillColor: z.color,
+        fillOpacity: 0.42,
+        weight: 2,
+        radius: z.radius
+      }).addTo(map);
+
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="
+          background:rgba(0,0,0,0.65);
+          color:#fff;
+          padding:3px 7px;
+          border-radius:3px;
+          font-size:11px;
+          font-weight:bold;
+          border:1px solid ${z.color};
+          white-space:nowrap;
+          pointer-events:none;
+        ">${z.name}</div>`,
+        iconAnchor: [40, 10]
+      });
+      L.marker(z.latlng, { icon, interactive: false }).addTo(map);
+
+      circle.on('click', () => showZone(z.idx));
+      circle.on('mouseover', () => circle.setStyle({ fillOpacity: 0.65 }));
+      circle.on('mouseout',  () => circle.setStyle({ fillOpacity: 0.42 }));
+    });
+
+    // 入口標記
+    L.marker([35.6243, 139.8830], {
+      icon: L.divIcon({
+        className: '',
+        html: `<div style="background:#c9a84c;color:#000;padding:3px 8px;border-radius:3px;font-size:11px;font-weight:bold;">🚪 入口</div>`,
+        iconAnchor: [20, 10]
+      }),
+      interactive: false
+    }).addTo(map);
   }
 
   // ── MAP DATA ──
