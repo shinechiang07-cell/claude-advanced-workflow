@@ -10,6 +10,7 @@
   2. 更新 `secondbrain/Claude進階工作流/工作筆記.md`（進度日誌）
   3. 將本次工作消化寫入 `secondbrain/每日筆記/YYYY-MM-DD.md`（今天學到什麼、做了什麼、接下來）
   4. 更新 Claude Code 記憶（memory 資料夾），儲存值得跨對話保留的 feedback / project 重點
+  5. Firebase（條件式）：若本次工作有新增或修改 Firestore 資料結構、集合、規則，才需同步更新 Firebase；純靜態工具則略過
 - **接續工作**：對 Claude 說「讀工作筆記、告訴我上次做到哪」
 - **消化**：對 Claude 說「消化」→ 僅執行步驟 3 + 4（不 commit/push）
 
