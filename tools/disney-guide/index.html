@@ -400,6 +400,144 @@
   .accent { color: var(--gold-light); font-weight: bold; }
   .accent-blue { color: var(--jubilee-light); }
 
+  /* ── MAP (Tab 6) ── */
+  .map-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .map-layout { grid-template-columns: 1fr; }
+  }
+  .map-wrap {
+    position: relative;
+    background: #0a1f3a;
+    border: 2px solid rgba(201,168,76,0.3);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .map-wrap svg { display: block; width: 100%; height: auto; }
+  .zone-area {
+    cursor: pointer;
+    transition: opacity 0.2s, filter 0.2s;
+    opacity: 0.82;
+  }
+  .zone-area:hover { opacity: 1; filter: brightness(1.15); }
+  .zone-area.active-zone { opacity: 1; filter: brightness(1.25) drop-shadow(0 0 6px rgba(255,220,80,0.7)); }
+  .zone-label {
+    font-size: 11px;
+    fill: #fff;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    font-weight: bold;
+    text-shadow: 0 1px 3px #000;
+  }
+  .zone-label-sub {
+    font-size: 9px;
+    fill: rgba(255,255,255,0.75);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+  /* Info Panel */
+  .map-panel {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 6px;
+    padding: 18px;
+    min-height: 300px;
+    position: sticky;
+    top: 12px;
+  }
+  .panel-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 260px;
+    color: rgba(255,255,255,0.2);
+    font-size: 13px;
+    text-align: center;
+    gap: 10px;
+  }
+  .panel-placeholder span { font-size: 36px; }
+  .panel-zone-name {
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+  .panel-zone-en {
+    font-size: 11px;
+    color: var(--jubilee-light);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .panel-section { margin-bottom: 12px; }
+  .panel-section-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .panel-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .panel-item:last-child { border-bottom: none; }
+  .panel-item-name { color: var(--white); flex: 1; }
+  .panel-item-tag {
+    flex-shrink: 0;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .tag-dpa { background: rgba(224,64,64,0.25); border: 1px solid #e04040; color: #ff8080; }
+  .tag-free { background: rgba(46,204,113,0.2); border: 1px solid #2ecc71; color: #5eff9e; }
+  .tag-sp { background: rgba(255,165,0,0.2); border: 1px solid orange; color: #ffc04d; }
+  .panel-price { color: var(--gold-light); font-size: 11px; flex-shrink: 0; }
+  .panel-tip {
+    background: rgba(26,111,168,0.12);
+    border-left: 3px solid var(--jubilee);
+    padding: 8px 10px;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.6;
+    border-radius: 0 3px 3px 0;
+    margin-top: 8px;
+  }
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
   /* ── FOOTER ── */
   footer {
     text-align: center;
@@ -426,6 +564,7 @@
   <button class="tab-btn" onclick="switchTab('tab3', this)">⏰ 售罄警報</button>
   <button class="tab-btn" onclick="switchTab('tab4', this)">🍿 爆米花桶</button>
   <button class="tab-btn" onclick="switchTab('tab5', this)">🧭 老手策略</button>
+  <button class="tab-btn" onclick="switchTab('tab6', this)">🗺️ 園區地圖</button>
 </div>
 
 <!-- ═══ TAB 1: 今年亮點 ═══ -->
@@ -712,6 +851,111 @@
   </div>
 </div>
 
+<!-- ═══ TAB 6: 園區地圖 ═══ -->
+<div id="tab6" class="tab-content">
+  <div class="section-title">東京迪士尼海洋 互動地圖</div>
+  <p style="font-size:12px;color:var(--text);margin-bottom:14px;">點擊地圖上的區域，查看設施、餐廳、票種與注意事項。</p>
+
+  <div class="map-layout">
+    <!-- SVG Map -->
+    <div class="map-wrap">
+      <svg viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg">
+        <!-- 海洋背景 -->
+        <rect width="500" height="440" fill="#0a1a2e"/>
+        <ellipse cx="250" cy="200" rx="195" ry="165" fill="#0d3358" opacity="0.6"/>
+
+        <!-- 地中海港灣 Mediterranean Harbor (入口, 底部中央) -->
+        <g class="zone-area" id="z0" onclick="showZone(0)">
+          <ellipse cx="250" cy="370" rx="110" ry="52" fill="#2a7a9a"/>
+          <text class="zone-label" x="250" y="363">地中海港灣</text>
+          <text class="zone-label-sub" x="250" y="378">Mediterranean Harbor</text>
+        </g>
+
+        <!-- 美國海濱 American Waterfront (右下) -->
+        <g class="zone-area" id="z1" onclick="showZone(1)">
+          <ellipse cx="388" cy="310" rx="82" ry="55" fill="#8b3a2a"/>
+          <text class="zone-label" x="388" y="303">美國海濱</text>
+          <text class="zone-label-sub" x="388" y="318">American Waterfront</text>
+        </g>
+
+        <!-- 發現港 Port Discovery (右上) -->
+        <g class="zone-area" id="z2" onclick="showZone(2)">
+          <ellipse cx="390" cy="185" rx="78" ry="52" fill="#1a6a8a"/>
+          <text class="zone-label" x="390" y="178">發現港</text>
+          <text class="zone-label-sub" x="390" y="193">Port Discovery</text>
+        </g>
+
+        <!-- 失落河三角洲 Lost River Delta (上方) -->
+        <g class="zone-area" id="z3" onclick="showZone(3)">
+          <ellipse cx="270" cy="95" rx="90" ry="52" fill="#2d6a2a"/>
+          <text class="zone-label" x="270" y="88">失落河三角洲</text>
+          <text class="zone-label-sub" x="270" y="103">Lost River Delta</text>
+        </g>
+
+        <!-- 阿拉伯海岸 Arabian Coast (左上) -->
+        <g class="zone-area" id="z4" onclick="showZone(4)">
+          <ellipse cx="118" cy="148" rx="82" ry="52" fill="#8a6a1a"/>
+          <text class="zone-label" x="118" y="141">阿拉伯海岸</text>
+          <text class="zone-label-sub" x="118" y="156">Arabian Coast</text>
+        </g>
+
+        <!-- 美人魚礁湖 Mermaid Lagoon (左下) -->
+        <g class="zone-area" id="z5" onclick="showZone(5)">
+          <ellipse cx="112" cy="278" rx="80" ry="52" fill="#4a2a7a"/>
+          <text class="zone-label" x="112" y="271">美人魚礁湖</text>
+          <text class="zone-label-sub" x="112" y="286">Mermaid Lagoon</text>
+        </g>
+
+        <!-- 神秘島 Mysterious Island (中央) -->
+        <g class="zone-area" id="z6" onclick="showZone(6)">
+          <ellipse cx="248" cy="218" rx="68" ry="52" fill="#5a1a0a"/>
+          <text class="zone-label" x="248" y="211">神秘島</text>
+          <text class="zone-label-sub" x="248" y="226">Mysterious Island</text>
+        </g>
+
+        <!-- 夢幻泉鄉 Fantasy Springs (右側延伸) -->
+        <g class="zone-area" id="z7" onclick="showZone(7)">
+          <rect x="455" y="100" width="42" height="200" rx="6" fill="#1a3a6a"/>
+          <text class="zone-label" x="476" y="180" transform="rotate(90,476,180)">夢幻泉鄉 Fantasy Springs</text>
+        </g>
+
+        <!-- 入口標示 -->
+        <polygon points="250,420 243,410 257,410" fill="var(--gold)" opacity="0.9"/>
+        <text x="250" y="408" text-anchor="middle" font-size="9" fill="#c9a84c">入口</text>
+
+        <!-- 火山 icon on Mysterious Island -->
+        <text x="248" y="205" text-anchor="middle" font-size="18" style="pointer-events:none">🌋</text>
+
+        <!-- 新區標示 -->
+        <rect x="456" y="88" width="40" height="14" rx="2" fill="#c9a84c"/>
+        <text x="476" y="98" text-anchor="middle" font-size="8" fill="#0d1b2e" font-weight="bold">2024新</text>
+      </svg>
+
+      <!-- Legend -->
+      <div style="padding:10px 14px 12px;">
+        <div class="map-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#2a7a9a"></div>地中海港灣</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8b3a2a"></div>美國海濱</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1a6a8a"></div>發現港</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2d6a2a"></div>失落河三角洲</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#8a6a1a"></div>阿拉伯海岸</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#4a2a7a"></div>美人魚礁湖</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#5a1a0a"></div>神秘島</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1a3a6a"></div>夢幻泉鄉</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="map-panel" id="map-panel">
+      <div class="panel-placeholder">
+        <span>🗺️</span>
+        點擊左側地圖的<br>任一區域<br>查看詳細資訊
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   資料來源：雲端硬碟「日本迪士尼」資料夾 · 東京迪士尼海洋 2026 深度研究報告<br>
   本攻略數據基於 2026 年平均觀測，實際情況以官方公告為準
@@ -769,6 +1013,157 @@
   function toggleAccordion(i) {
     const item = document.getElementById('acc' + i);
     item.classList.toggle('open');
+  }
+
+  // ── MAP DATA ──
+  const zones = [
+    {
+      name: '地中海港灣', en: 'Mediterranean Harbor',
+      attractions: [
+        { name: '達菲與好友迎賓會', tag: 'free', note: '報名體驗抽選' },
+        { name: '威尼斯貢多拉', tag: 'free', note: '免費乘船' },
+        { name: 'Sparkling Jubilee Celebration 巡航', tag: 'free', note: '25週年限定表演' },
+      ],
+      restaurants: [
+        { name: 'Magellan\'s（麥哲倫）', price: '¥3,500–6,000', note: '正餐，需預約' },
+        { name: 'Teddy Roosevelt Lounge', price: '¥2,000–3,500', note: '酒吧輕食' },
+        { name: '地中海港灣小吃', price: '¥800–1,500', note: '爆米花桶販售點' },
+      ],
+      tips: '入口廣場是 25 週年慶典藍裝飾主戰場。夜間「閃耀慶典之夜」投影在此舉行，建議提早 30 分鐘卡位 Ponte Vecchio 橋。限定紀念瓶也在此購買。'
+    },
+    {
+      name: '美國海濱', en: 'American Waterfront',
+      attractions: [
+        { name: '玩具總動員瘋狂遊戲屋', tag: 'dpa', note: 'DPA ¥1,500｜Toy Story 5 聯動' },
+        { name: '海底兩萬哩', tag: 'dpa', note: 'DPA ¥1,500' },
+        { name: 'Big Band Beat', tag: 'er', note: '報名體驗抽選' },
+        { name: 'Tower of Terror', tag: 'dpa', note: 'DPA ¥2,000' },
+      ],
+      restaurants: [
+        { name: 'S.S. Columbia 甲板餐廳', price: '¥3,000–5,000', note: '海景景觀餐廳' },
+        { name: 'New York Deli', price: '¥1,200–2,000', note: '三明治、熱狗' },
+        { name: 'Dockside Diner', price: '¥900–1,500', note: '漢堡、薯條' },
+      ],
+      tips: '2026/7–9月「Funtime with Toy Story 5」活動在此最密集，集章地點多。Tower of Terror 週末 DPA 約 09:30 售罄，要衝早。'
+    },
+    {
+      name: '發現港', en: 'Port Discovery',
+      attractions: [
+        { name: '翱翔：夢幻奇航', tag: 'dpa', note: 'DPA ¥2,000｜平日 09:42 售罄' },
+        { name: 'Nemo & Friends SeaRider', tag: 'sp', note: '預約等候卡' },
+        { name: 'Aquatopia', tag: 'free', note: '免費乘坐' },
+      ],
+      restaurants: [
+        { name: 'Horizon Bay Restaurant', price: '¥1,500–2,500', note: '自助式，海景' },
+        { name: 'Seaside Snacks', price: '¥600–1,200', note: '輕食點心' },
+      ],
+      tips: '翱翔是全園第二熱門，開園第一步搶完冰雪奇緣 DPA 後立刻搶這個。Aquatopia 天氣好時很有趣，不需排太久。'
+    },
+    {
+      name: '失落河三角洲', en: 'Lost River Delta',
+      attractions: [
+        { name: '印第安納瓊斯冒險旅程', tag: 'dpa', note: 'Single Rider 可用！2hr→15min' },
+        { name: '忿怒雙神', tag: 'dpa', note: 'Single Rider 可用！免費縮短等待' },
+        { name: 'Raging Spirits', tag: 'free', note: '同忿怒雙神' },
+      ],
+      restaurants: [
+        { name: 'Yucatan Base Camp Grill', price: '¥1,500–2,500', note: '烤肉料理' },
+        { name: 'Miguel\'s El Dorado Cantina', price: '¥1,000–1,800', note: '墨西哥風味' },
+      ],
+      tips: '印第安納瓊斯＆忿怒雙神都支援 Single Rider（單人通道），等待從 2 小時縮至 15 分鐘以內，完全免費！不介意和同伴分開坐就大力推薦。'
+    },
+    {
+      name: '阿拉伯海岸', en: 'Arabian Coast',
+      attractions: [
+        { name: '阿拉丁魔毯', tag: 'free', note: '親子友善，不需搶票' },
+        { name: '辛巴達傳奇之旅', tag: 'free', note: '船行緩慢，適合休息' },
+        { name: '魔法燈神劇場', tag: 'er', note: '報名體驗抽選' },
+      ],
+      restaurants: [
+        { name: 'Casbah Food Court', price: '¥1,200–2,000', note: '中東風味套餐' },
+        { name: 'The Sultan\'s Oasis', price: '¥700–1,200', note: '輕食、飲料' },
+      ],
+      tips: '這區相對冷門，下午體力下降時來最舒適。辛巴達傳奇之旅是室內冷氣設施，夏天避暑首選。'
+    },
+    {
+      name: '美人魚礁湖', en: 'Mermaid Lagoon',
+      attractions: [
+        { name: '愛麗兒的珍寶', tag: 'free', note: '室內展覽，可欣賞音樂劇' },
+        { name: '旋轉水母', tag: 'free', note: '親子設施' },
+        { name: 'Mermaid Lagoon Theater', tag: 'er', note: '報名體驗抽選' },
+      ],
+      restaurants: [
+        { name: 'Sebastian\'s Calypso Kitchen', price: '¥1,000–1,800', note: '加勒比風味' },
+        { name: '礁湖小吃攤', price: '¥500–1,000', note: '爆米花、點心' },
+      ],
+      tips: '全區在室內，下雨天或夏天避暑來這裡。設施多為兒童向，等待時間短，親子家庭適合下午來消化行程。'
+    },
+    {
+      name: '神秘島', en: 'Mysterious Island',
+      attractions: [
+        { name: '地心探險之旅', tag: 'dpa', note: 'DPA ¥2,000｜最熱門設施之一' },
+        { name: '海底兩萬哩', tag: 'dpa', note: 'DPA ¥1,500' },
+      ],
+      restaurants: [
+        { name: 'Vulcania Restaurant', price: '¥1,500–2,500', note: '火山岩主題，套餐' },
+        { name: 'Nautilus Galley', price: '¥800–1,500', note: '輕食、濃湯' },
+      ],
+      tips: '火山景觀是 TDS 最標誌性的景色，建議傍晚在此拍照，光線絕佳。地心探險是最受歡迎設施之一，DPA 開園前 30 分鐘幾乎售罄。'
+    },
+    {
+      name: '夢幻泉鄉', en: 'Fantasy Springs',
+      attractions: [
+        { name: '❄️ 安娜與艾莎的冰雪之旅', tag: 'dpa', note: 'DPA ¥2,500｜08:52 售罄！入園即搶' },
+        { name: '🌊 彼得潘的夢幻飛行', tag: 'dpa', note: 'DPA ¥2,000' },
+        { name: '🌸 魔髮奇緣燈塔', tag: 'sp', note: '預約等候卡' },
+      ],
+      restaurants: [
+        { name: '艾倫戴爾皇家宴會', price: '¥3,500', note: '冰雪主題高級套餐，需預約' },
+        { name: '醜小鴨小館', price: '¥1,200–1,800', note: '主題漢堡' },
+        { name: '魔法泉水吧', price: '¥600–1,000', note: '限定飲品' },
+      ],
+      tips: '2024 年最新區域，全園最熱門！進入需 DPA 或預約等候卡。冰雪奇緣 DPA 平日 08:52 售罄，入園第一秒立即搶購。親子遊必備獨立 eSIM，別靠園區 Wi-Fi。'
+    },
+  ];
+
+  function showZone(i) {
+    // Remove active from all zones
+    document.querySelectorAll('.zone-area').forEach(el => el.classList.remove('active-zone'));
+    document.getElementById('z' + i).classList.add('active-zone');
+
+    const z = zones[i];
+    const tagMap = {
+      dpa: '<span class="panel-item-tag tag-dpa">DPA付費</span>',
+      free: '<span class="panel-item-tag tag-free">免費</span>',
+      sp: '<span class="panel-item-tag tag-sp">Standby Pass</span>',
+      er: '<span class="panel-item-tag tag-free">抽選</span>',
+    };
+
+    const attrHTML = z.attractions.map(a => `
+      <div class="panel-item">
+        <span class="panel-item-name">🎢 ${a.name}<br><span style="font-size:10px;color:#8aaccc">${a.note}</span></span>
+        ${tagMap[a.tag] || ''}
+      </div>`).join('');
+
+    const restHTML = z.restaurants.map(r => `
+      <div class="panel-item">
+        <span class="panel-item-name">🍽️ ${r.name}<br><span style="font-size:10px;color:#8aaccc">${r.note}</span></span>
+        <span class="panel-price">${r.price}</span>
+      </div>`).join('');
+
+    document.getElementById('map-panel').innerHTML = `
+      <div class="panel-zone-name">${z.name}</div>
+      <div class="panel-zone-en">${z.en}</div>
+      <div class="panel-section">
+        <div class="panel-section-title">🎢 設施</div>
+        ${attrHTML}
+      </div>
+      <div class="panel-section">
+        <div class="panel-section-title">🍽️ 餐廳 &amp; 價位</div>
+        ${restHTML}
+      </div>
+      <div class="panel-tip">💡 ${z.tips}</div>
+    `;
   }
 </script>
 </body>
