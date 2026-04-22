@@ -5,8 +5,13 @@
 
 ## 工作模式
 - **加新工具**：對 Claude 說「我想做一個 XXX 工具」→ Claude 會建 `tools/<工具名>/` 子資料夾、引導我跟著影片做
-- **結束工作**：對 Claude 說「**收工**」→ 自動 commit + push + 更新 Obsidian 工作筆記
+- **結束工作**：對 Claude 說「**收工**」→ 依序執行：
+  1. git commit + push 到 GitHub
+  2. 更新 `secondbrain/Claude進階工作流/工作筆記.md`（進度日誌）
+  3. 將本次工作消化寫入 `secondbrain/每日筆記/YYYY-MM-DD.md`（今天學到什麼、做了什麼、接下來）
+  4. 更新 Claude Code 記憶（memory 資料夾），儲存值得跨對話保留的 feedback / project 重點
 - **接續工作**：對 Claude 說「讀工作筆記、告訴我上次做到哪」
+- **消化**：對 Claude 說「消化」→ 僅執行步驟 3 + 4（不 commit/push）
 
 ## 工作桌 + 三個家
 - 📋 GDrive 工作桌：`G:\我的雲端硬碟\Claude進階工作流\`（自動跨電腦同步）
